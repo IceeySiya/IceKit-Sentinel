@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using IceKitSentinel.Api.Models;
 
 namespace IceKitSentinel.Api.Data;
 
@@ -8,5 +9,6 @@ public class IceKitDbContext : DbContext
         : base(options)
     {
     }
+    public DbSet<User> Users { get; set; }
 }
 
