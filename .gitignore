@@ -1,0 +1,15 @@
+# .NET build output
+bin/
+obj/
+
+# Local development settings and secrets
+**/appsettings.Development.json
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+
+# User-specific files
+*.user
+*.suo

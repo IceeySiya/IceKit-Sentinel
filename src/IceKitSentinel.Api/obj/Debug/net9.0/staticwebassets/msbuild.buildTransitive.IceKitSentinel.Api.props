@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/IceKitSentinel.Api.props" />
-</Project>
