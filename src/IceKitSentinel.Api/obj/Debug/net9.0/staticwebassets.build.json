@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "4ASRWvV8fQjICIQRPtJKvUGw6JQEf3Suxy6lSNJSyCg=",
+  "Source": "IceKitSentinel.Api",
+  "BasePath": "_content/IceKitSentinel.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
