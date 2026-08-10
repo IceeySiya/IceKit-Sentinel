@@ -1,10 +1,11 @@
 using IceKitSentinel.Api.Data;
 using IceKitSentinel.Api.DTOs;
 using IceKitSentinel.Api.Models;
+using IceKitSentinel.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using IceKitSentinel.Api.Services;
 
 namespace IceKitSentinel.Api.Controllers;
 
@@ -17,16 +18,16 @@ public class AuthController : ControllerBase
 {
 // Provides access to the PostgreSQL database through EF Core.
 private readonly IceKitDbContext _context;
+
 // Generates JWT tokens after successful login.
 private readonly JwtService _jwtService;
-
 
 // Hashes passwords during registration
 // and verifies passwords during login.
 private readonly PasswordHasher<User> _passwordHasher;
 
-// Uses dependency injection to receive the database context
-// and password hasher.
+// Uses dependency injection to receive the database context,
+// password hasher, and JWT service.
 public AuthController(
     IceKitDbContext context,
     PasswordHasher<User> passwordHasher,
@@ -34,7 +35,7 @@ public AuthController(
 {
     _context = context;
     _passwordHasher = passwordHasher;
-    _jwtService=jwtService;
+    _jwtService = jwtService;
 }
 
 // Handles POST requests sent to:
@@ -60,7 +61,8 @@ public async Task<ActionResult<AuthResponse>> Register(
     var user = new User
     {
         UserName = request.UserName,
-        Email = request.Email
+        Email = request.Email,
+        Role = "user" // Default role for new users
     };
 
     // Hashes the password before saving it.
@@ -126,16 +128,33 @@ public async Task<ActionResult<AuthResponse>> Login(
         });
     }
 
-    // Returns HTTP 200 OK when login is successful.
-    // The password hash is never exposed.
+    // Generates a JWT after successful authentication.
     var token = _jwtService.GenerateToken(user);
+
+    // Returns HTTP 200 OK with the user's information
+    // and the generated JWT.
+    // The password hash is never exposed.
     return Ok(new AuthResponse
     {
         Id = user.Id,
         UserName = user.UserName,
         Email = user.Email,
         Message = "Login Successful",
-        Token=token
+        Token = token
+    });
+}
+
+// Requires a valid JWT before the endpoint can be accessed.
+[Authorize]
+[HttpGet("profile")]
+public IActionResult GetProfile()
+{
+    // Returns a successful response only when
+    // the JWT token is valid.
+    return Ok(new
+    {
+        message =
+            "You are authenticated and can access this protected endpoint."
     });
 }
 

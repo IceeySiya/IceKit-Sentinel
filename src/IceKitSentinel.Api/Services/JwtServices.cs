@@ -52,7 +52,10 @@ public string GenerateToken(User user)
 
         new Claim(
             JwtRegisteredClaimNames.UniqueName,
-            user.UserName)
+            user.UserName),
+        new Claim(
+            ClaimTypes.Role,
+            user.Role)    
     };
 
     // Creates a security key from the JWT secret.
