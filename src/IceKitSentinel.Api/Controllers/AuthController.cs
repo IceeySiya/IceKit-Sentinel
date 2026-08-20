@@ -158,5 +158,17 @@ public IActionResult GetProfile()
     });
 }
 
+// Requires the request to contain a valid JWT
+// AND requires the authenticated user to have the "User" role.
+[Authorize(Roles = "user")]
+[HttpGet("user-area")]
+public IActionResult UserArea()
+{
+    return Ok(new
+    {
+        message = "You have access to the User area."
+    });
+}
+
 
 }

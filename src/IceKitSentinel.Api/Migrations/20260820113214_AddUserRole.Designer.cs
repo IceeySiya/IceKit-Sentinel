@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IceKitSentinel.Api.Migrations
 {
     [DbContext(typeof(IceKitDbContext))]
-    [Migration("20260810133339_AddUserRole")]
+    [Migration("20260820113214_AddUserRole")]
     partial class AddUserRole
     {
         /// <inheritdoc />
