@@ -62,7 +62,7 @@ public async Task<ActionResult<AuthResponse>> Register(
     {
         UserName = request.UserName,
         Email = request.Email,
-        Role = "user" // Default role for new users
+        Role = "User" // Default role for new users
     };
 
     // Hashes the password before saving it.
