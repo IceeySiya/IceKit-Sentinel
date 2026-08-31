@@ -18,6 +18,18 @@ builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Enables API controllers such as AuthController.
 builder.Services.AddControllers();
+
+// Allows the React frontend to communicate with the API.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 // Reads the JWT configuration from appsettings.Development.json.
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException(
@@ -80,6 +92,7 @@ app.MapOpenApi();
 
 // Redirects HTTP requests to HTTPS when an HTTPS port is configured.
 app.UseHttpsRedirection();
+app.UseCors("ReactFrontend");
 // Checks the JWT token on incoming requests.
 app.UseAuthentication();
 
