@@ -1,8 +1,8 @@
-using IceKitSentinel.Api.DTOs;
-using IceKitSentinel.Api.Services;
+using IceKitSentinel.Api.DTOs.PasswordAnalyzer;
+using IceKitSentinel.Api.Services.PasswordAnalyzer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IceKitSentinel.Api.Controllers;
+namespace IceKitSentinel.Api.Controllers.PasswordAnalyzer;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -27,7 +27,7 @@ public class PasswordAnalysisController : ControllerBase
                 message = "Password cannot be empty."
             });
         }
-        var analysisResult = _passwordSecurityService.Analyze(request);
+        var analysisResult =await  _passwordSecurityService.Analyze(request);
         return Ok(analysisResult);
     }
 

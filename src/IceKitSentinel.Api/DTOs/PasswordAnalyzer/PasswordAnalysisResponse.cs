@@ -1,4 +1,4 @@
-namespace IceKitSentinel.Api.DTOs;
+namespace IceKitSentinel.Api.DTOs.PasswordAnalyzer;
 
 public class PasswordAnalysisResponse
 {

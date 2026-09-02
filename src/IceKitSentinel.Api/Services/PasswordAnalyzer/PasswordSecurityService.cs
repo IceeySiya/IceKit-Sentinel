@@ -1,8 +1,8 @@
-using IceKitSentinel.Api.DTOs;
-
+using IceKitSentinel.Api.DTOs.PasswordAnalyzer;
+namespace IceKitSentinel.Api.Services.PasswordAnalyzer;
 public class PasswordSecurityService
 {
-    public PasswordAnalysisResponse Analyze(PasswordAnalysisRequest request)
+    public async Task<PasswordAnalysisResponse> Analyze(PasswordAnalysisRequest request)
     {
         // the analysis logic 
         var response = new PasswordAnalysisResponse()

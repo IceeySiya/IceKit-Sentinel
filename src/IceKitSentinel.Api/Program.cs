@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using IceKitSentinel.Api.Services.PasswordAnalyzer;
+using IceKitSentinel.Api.Services.PasswordGenerator;
 using IceKitSentinel.Api.Services;
 
 // Creates the ASP.NET Core application builder.
@@ -74,7 +76,10 @@ builder.Services.AddAuthorization();
 // Registers PasswordHasher as a service.
 // It hashes passwords during registration and verifies them during login.
 builder.Services.AddScoped<PasswordHasher<User>>();
-
+//this is a service that analyzes password security and is used in PasswordAnalysisController.
+builder.Services.AddScoped<PasswordSecurityService>();
+// Registers PasswordGeneratorService so it can be injected into PasswordGeneratorController.
+builder.Services.AddScoped<PasswordGeneratorService>();
 // Registers JwtService so it can be injected into AuthController.
 builder.Services.AddScoped<JwtService>();
 
