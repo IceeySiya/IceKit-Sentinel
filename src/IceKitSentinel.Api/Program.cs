@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IceKitSentinel.Api.Services.PasswordAnalyzer;
 using IceKitSentinel.Api.Services.PasswordGenerator;
+using IceKitSentinel.Api.Services.Hasher;
 using IceKitSentinel.Api.Services;
 
 // Creates the ASP.NET Core application builder.
@@ -80,6 +81,8 @@ builder.Services.AddScoped<PasswordHasher<User>>();
 builder.Services.AddScoped<PasswordSecurityService>();
 // Registers PasswordGeneratorService so it can be injected into PasswordGeneratorController.
 builder.Services.AddScoped<PasswordGeneratorService>();
+// this is the service that creates the hash
+builder.Services.AddScoped<HashService>();
 // Registers JwtService so it can be injected into AuthController.
 builder.Services.AddScoped<JwtService>();
 

@@ -19,7 +19,7 @@ public class PasswordGeneratorService
     
     public async Task<PasswordGeneratorResponseDTO> GeneratePasswordAsync(PasswordGeneratorRequestDTO request)
     {
-        if(request.Length <= 12)
+        if(request.Length < 12)
         {
             throw new ArgumentException("Password length must be greater than or equal to 12.");
         }
