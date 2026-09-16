@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+    const navigate = useNavigate();
     return (
         <div>
             <h1>IceKit Sentinel</h1>
@@ -14,7 +16,7 @@ function Dashboard() {
                 <p>
                     Analyze the strength of a password.
                 </p>
-                <button>
+                <button onClick={() => navigate('/tools/password-analyzer')}>
                     Open Tool
                 </button>
             </div>
@@ -24,7 +26,7 @@ function Dashboard() {
                 <p>
                     Generate a secure random password.
                 </p>
-                <button>
+                <button onClick={() => navigate('/tools/password-generator')}>
                     Open Tool
                 </button>
             </div>
@@ -34,7 +36,7 @@ function Dashboard() {
                 <p>
                     Generate cryptographic hashes.
                 </p>
-                <button>
+                <button onClick={() => navigate('/tools/hashing')}>
                     Open Tool
                 </button>
             </div>

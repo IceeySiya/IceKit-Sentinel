@@ -1,4 +1,5 @@
 namespace IceKitSentinel.Api.Controllers.PasswordGenerator;
+
 using IceKitSentinel.Api.DTOs.PasswordGenerator;
 using IceKitSentinel.Api.Services.PasswordGenerator;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 public class PasswordGeneratorController : ControllerBase
 {
     private readonly PasswordGeneratorService _passwordGeneratorService;
+
     public PasswordGeneratorController()
     {
         _passwordGeneratorService = new PasswordGeneratorService();
     }
 
     [HttpPost("generate")]
-    public IActionResult GeneratePassword(PasswordGeneratorRequestDTO requestDTO)
+    public async Task<IActionResult> GeneratePassword(
+        PasswordGeneratorRequestDTO requestDTO)
     {
         try
         {
-            var passwordResponse = _passwordGeneratorService.GeneratePasswordAsync(requestDTO);
+            var passwordResponse =
+                await _passwordGeneratorService.GeneratePasswordAsync(requestDTO);
+
             return Ok(passwordResponse);
         }
         catch (Exception ex)
