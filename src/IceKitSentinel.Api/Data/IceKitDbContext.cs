@@ -10,5 +10,6 @@ public class IceKitDbContext : DbContext
     {
     }
     public DbSet<User> Users { get; set; }
+    public DbSet<FileIntegrityRecord> FileIntegrityRecords { get; set; }
 }
 

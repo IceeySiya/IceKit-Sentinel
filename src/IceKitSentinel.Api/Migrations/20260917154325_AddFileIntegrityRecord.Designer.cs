@@ -3,6 +3,7 @@ using System;
 using IceKitSentinel.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IceKitSentinel.Api.Migrations
 {
     [DbContext(typeof(IceKitDbContext))]
-    partial class IceKitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917154325_AddFileIntegrityRecord")]
+    partial class AddFileIntegrityRecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

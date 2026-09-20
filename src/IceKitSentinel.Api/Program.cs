@@ -8,7 +8,9 @@ using System.Text;
 using IceKitSentinel.Api.Services.PasswordAnalyzer;
 using IceKitSentinel.Api.Services.PasswordGenerator;
 using IceKitSentinel.Api.Services.Hasher;
+using IceKitSentinel.Api.Services.FileIntegrity;
 using IceKitSentinel.Api.Services;
+using IceKitSentinel.Api.Services.SecurityHeaders;
 
 // Creates the ASP.NET Core application builder.
 var builder = WebApplication.CreateBuilder(args);
@@ -83,9 +85,13 @@ builder.Services.AddScoped<PasswordSecurityService>();
 builder.Services.AddScoped<PasswordGeneratorService>();
 // this is the service that creates the hash
 builder.Services.AddScoped<HashService>();
+// Registers FileIntegrityService so it can be injected into FileIntegrityController.
+builder.Services.AddScoped<FileIntegrityService>();
 // Registers JwtService so it can be injected into AuthController.
 builder.Services.AddScoped<JwtService>();
-
+// Registers SecurityHeadersService so it can be injected into SecurityHeadersController.
+builder.Services.AddHttpClient<SecurityHeadersService>();
+builder.Services.AddScoped<SsrfProtectionService>();
 // Adds OpenAPI services for API documentation.
 builder.Services.AddOpenApi();
 

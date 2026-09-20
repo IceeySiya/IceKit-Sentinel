@@ -40,6 +40,36 @@ function Dashboard() {
                     Open Tool
                 </button>
             </div>
+
+            <div>
+                <h3>Hash Verification</h3>
+                <p>
+                    Verify if a given hash matches the generated hash.
+                </p>
+                <button onClick={() => navigate('/tools/hash-verification')}>
+                    Open Tool
+                </button>
+            </div>
+
+            <div>
+                <h3>File Integrity Check</h3>
+                <p>
+                    Verify the integrity of a file by comparing its hash.
+                </p>
+                <button onClick={() => navigate('/tools/file-integrity')}>
+                    Open Tool
+                </button>
+            </div>
+
+            <div>
+                <h3>Security Headers Checker</h3>
+                <p>
+                    Analyze a website's HTTP response headers for commonly recommended security headers.
+                </p>
+                <button onClick={() => navigate('/tools/security-headers')}>
+                    Open Tool
+                </button>
+            </div>
         </div>
     );
 }

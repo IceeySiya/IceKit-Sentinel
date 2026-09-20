@@ -6,6 +6,9 @@ import Dashboard from "./pages/Dashboard.jsx";
 import PasswordAnalyzer from "./pages/PasswordAnalyzer.jsx";
 import PasswordGenerator from "./pages/PasswordGenerator.jsx";
 import Hashing from "./pages/Hashing.jsx";
+import HashVerification from "./pages/HashVerification.jsx";
+import FileIntegrity from "./pages/FileIntegrity.jsx";
+import SecurityHeaders from "./pages/SecurityHeaders.jsx";
 
 function App() {
     return (
@@ -44,6 +47,21 @@ function App() {
                 <Route
                     path="/tools/hashing"
                     element={<Hashing />}
+                />
+
+                <Route
+                    path="/tools/hash-verification"
+                    element={<HashVerification />}
+                />
+
+                <Route
+                    path="/tools/file-integrity"
+                    element={<FileIntegrity />}
+                />
+
+                <Route
+                    path="/tools/security-headers"
+                    element={<SecurityHeaders />}
                 />
             </Routes>
         </BrowserRouter>

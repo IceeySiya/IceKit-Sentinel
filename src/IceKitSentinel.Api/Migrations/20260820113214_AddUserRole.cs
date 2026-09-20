@@ -4,26 +4,18 @@
 
 namespace IceKitSentinel.Api.Migrations
 {
-    /// <inheritdoc />
     public partial class AddUserRole : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Role",
-                table: "Users",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+            // The Role column already exists in the database.
+            // This migration is intentionally left empty so that
+            // EF Core can synchronize its migration history.
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Role",
-                table: "Users");
+            // Do not remove the existing Role column.
         }
     }
 }
