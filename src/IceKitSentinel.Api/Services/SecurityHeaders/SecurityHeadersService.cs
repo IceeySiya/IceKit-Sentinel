@@ -4,6 +4,8 @@ using IceKitSentinel.Api.DTOs.SecurityHeaders;
 
 public class SecurityHeadersService
 {
+    private const int MaxRedirects = 5;
+
     private readonly HttpClient _httpClient;
     private readonly SsrfProtectionService _ssrfProtectionService;
 
@@ -46,51 +48,118 @@ public class SecurityHeadersService
             );
         }
 
-        // Validate the destination before making
-        // a server-side HTTP request.
+        // Validate the initial destination.
         await _ssrfProtectionService.ValidateUrlAsync(uri);
 
-        // Make the request only after SSRF validation succeeds.
-        using var response =
-            await _httpClient.GetAsync(uri);
+        var currentUri = uri;
+        var redirectCount = 0;
 
-        // Security headers that IceKit Sentinel checks.
-        var headersToCheck = new[]
+        HttpResponseMessage response;
+
+        while (true)
         {
-            "Content-Security-Policy",
-            "Strict-Transport-Security",
-            "X-Content-Type-Options",
-            "X-Frame-Options",
-            "Referrer-Policy",
-            "Permissions-Policy"
-        };
+            // Make the request only after the destination
+            // has passed SSRF validation.
+            response =
+                await _httpClient.GetAsync(currentUri);
 
-        // Store whether each security header exists.
-        var securityHeaders =
-            new Dictionary<string, bool>();
+            // If this isn't a redirect, we're finished.
+            if (!IsRedirect(response))
+            {
+                break;
+            }
 
-        foreach (var header in headersToCheck)
-        {
-            securityHeaders[header] =
-                response.Headers.Contains(header) ||
-                response.Content.Headers.Contains(header);
+            redirectCount++;
+
+            // Prevent endless redirect chains.
+            if (redirectCount > MaxRedirects)
+            {
+                response.Dispose();
+
+                throw new InvalidOperationException(
+                    "The target URL redirected too many times."
+                );
+            }
+
+            // A redirect should contain a Location header.
+            if (response.Headers.Location == null)
+            {
+                response.Dispose();
+
+                throw new InvalidOperationException(
+                    "The target server returned a redirect without a destination."
+                );
+            }
+
+            // Resolve relative redirects against the current URL.
+            var redirectUri =
+                response.Headers.Location.IsAbsoluteUri
+                    ? response.Headers.Location
+                    : new Uri(
+                        currentUri,
+                        response.Headers.Location
+                    );
+
+            response.Dispose();
+
+            // Validate the REDIRECT destination before following it.
+            await _ssrfProtectionService
+                .ValidateUrlAsync(redirectUri);
+
+            currentUri = redirectUri;
         }
 
-        // Count how many security headers were found.
-        var headersPresent =
-            securityHeaders.Count(
-                header => header.Value
-            );
-
-        // Return the analysis result.
-        return new SecurityHeadersResponseDto
+        using (response)
         {
-            Url = request.Url,
-            StatusCode = (int)response.StatusCode,
-            IsHttps = uri.Scheme == Uri.UriSchemeHttps,
-            SecurityHeaders = securityHeaders,
-            HeadersPresent = headersPresent,
-            HeadersChecked = headersToCheck.Length
-        };
+            var headersToCheck = new[]
+            {
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "X-Frame-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            };
+
+            var securityHeaders =
+                new Dictionary<string, bool>();
+
+            foreach (var header in headersToCheck)
+            {
+                securityHeaders[header] =
+                    response.Headers.Contains(header) ||
+                    response.Content.Headers.Contains(header);
+            }
+
+            var headersPresent =
+                securityHeaders.Count(
+                    header => header.Value
+                );
+
+            return new SecurityHeadersResponseDto
+            {
+                // Return the final URL that was actually analyzed.
+                Url = currentUri.ToString(),
+
+                StatusCode = (int)response.StatusCode,
+
+                IsHttps =
+                    currentUri.Scheme ==
+                    Uri.UriSchemeHttps,
+
+                SecurityHeaders = securityHeaders,
+
+                HeadersPresent = headersPresent,
+
+                HeadersChecked = headersToCheck.Length
+            };
+        }
+    }
+
+    private static bool IsRedirect(
+        HttpResponseMessage response)
+    {
+        return (int)response.StatusCode >= 300 &&
+               (int)response.StatusCode <= 399;
     }
 }

@@ -90,7 +90,11 @@ builder.Services.AddScoped<FileIntegrityService>();
 // Registers JwtService so it can be injected into AuthController.
 builder.Services.AddScoped<JwtService>();
 // Registers SecurityHeadersService so it can be injected into SecurityHeadersController.
-builder.Services.AddHttpClient<SecurityHeadersService>();
+builder.Services.AddHttpClient<SecurityHeadersService>().ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            AllowAutoRedirect = false
+        });
 builder.Services.AddScoped<SsrfProtectionService>();
 // Adds OpenAPI services for API documentation.
 builder.Services.AddOpenApi();

@@ -1,0 +1,426 @@
+/* =========================
+   GLOBAL STYLES
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1 {
+    color: #ffffff;
+}
+
+h2 {
+    color: #f8fafc;
+}
+
+h3 {
+    color: #e0f2fe;
+}
+
+h4,
+h5,
+h6 {
+    color: #e2e8f0;
+}
+
+
+/* =========================
+   TEXT
+   ========================= */
+
+p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+label {
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button {
+    cursor: pointer;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 10px 16px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background-color: #0284c7;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #0369a1;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+/* =========================
+   INPUTS
+   ========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #475569;
+    border-radius: 6px;
+
+    background-color: #1e293b;
+    color: #f8fafc;
+
+    font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid #38bdf8;
+    border-color: #38bdf8;
+}
+
+
+/* =========================
+   DASHBOARD
+   ========================= */
+
+.dashboard {
+    min-height: 100vh;
+    background-color: #0f172a;
+}
+
+
+/* =========================
+   DASHBOARD HEADER
+   ========================= */
+
+.dashboard-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+
+    background-color: #111827;
+
+    border-bottom: 1px solid #475569;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 5px 0;
+
+    color: #38bdf8;
+
+    font-size: 28px;
+}
+
+.dashboard-header p {
+    margin: 0;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+   ========================= */
+
+.logout-button {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.logout-button:hover {
+    background-color: #b91c1c;
+}
+
+
+/* =========================
+   DASHBOARD CONTENT
+   ========================= */
+
+.dashboard-content {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 50px 30px;
+}
+
+
+/* =========================
+   DASHBOARD INTRODUCTION
+   ========================= */
+
+.dashboard-intro {
+    margin-bottom: 35px;
+}
+
+.dashboard-intro h2 {
+    margin-bottom: 10px;
+
+    color: #ffffff;
+
+    font-size: 32px;
+}
+
+.dashboard-intro p {
+    color: #cbd5e1;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   TOOL GRID
+   ========================= */
+
+.tool-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+
+/* =========================
+   TOOL CARD
+   ========================= */
+
+.tool-card {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 250px;
+
+    padding: 25px;
+
+    background-color: #1e293b;
+
+    border: 1px solid #475569;
+
+    border-radius: 10px;
+}
+
+.tool-card:hover {
+    border-color: #38bdf8;
+}
+
+
+/* =========================
+   TOOL ICON
+   ========================= */
+
+.tool-icon {
+    margin-bottom: 15px;
+
+    font-size: 30px;
+}
+
+
+/* =========================
+   TOOL TITLE
+   ========================= */
+
+.tool-card h3 {
+    margin-bottom: 10px;
+
+    color: #e0f2fe;
+
+    font-size: 19px;
+}
+
+
+/* =========================
+   TOOL DESCRIPTION
+   ========================= */
+
+.tool-card p {
+    flex-grow: 1;
+
+    color: #cbd5e1;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   TOOL BUTTON
+   ========================= */
+
+.tool-card button {
+    align-self: flex-start;
+
+    background-color: #0284c7;
+
+    color: #ffffff;
+}
+
+.tool-card button:hover {
+    background-color: #0369a1;
+}
+
+
+/* =========================
+   TABLES
+   ========================= */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+    background-color: #1e293b;
+}
+
+th {
+    padding: 12px;
+
+    text-align: left;
+
+    background-color: #334155;
+
+    color: #ffffff;
+
+    border-bottom: 1px solid #64748b;
+}
+
+td {
+    padding: 12px;
+
+    color: #e2e8f0;
+
+    border-bottom: 1px solid #475569;
+}
+
+
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+    color: #38bdf8;
+
+    text-decoration: none;
+}
+
+a:hover {
+    color: #7dd3fc;
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   SUCCESS / ERROR MESSAGES
+   ========================= */
+
+.success {
+    color: #4ade80;
+
+    background-color: #14532d;
+
+    border: 1px solid #22c55e;
+
+    padding: 10px;
+
+    border-radius: 6px;
+}
+
+.error {
+    color: #fca5a5;
+
+    background-color: #450a0a;
+
+    border: 1px solid #ef4444;
+
+    padding: 10px;
+
+    border-radius: 6px;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+@media (max-width: 900px) {
+    .tool-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-header {
+        padding: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 22px;
+    }
+
+    .dashboard-content {
+        padding: 30px 20px;
+    }
+
+    .tool-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

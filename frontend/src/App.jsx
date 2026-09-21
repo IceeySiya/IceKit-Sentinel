@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
+} from "react-router-dom";
+
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -10,59 +16,69 @@ import HashVerification from "./pages/HashVerification.jsx";
 import FileIntegrity from "./pages/FileIntegrity.jsx";
 import SecurityHeaders from "./pages/SecurityHeaders.jsx";
 
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route 
+
+                {/* Public routes */}
+                <Route
                     path="/"
                     element={<Navigate to="/login" replace />}
                 />
-                
+
                 <Route
                     path="/register"
                     element={<Register />}
                 />
 
-                 <Route
+                <Route
                     path="/login"
                     element={<Login />}
                 />
 
-                <Route
-                    path="/dashboard"
-                    element={<Dashboard />}
-                />
+                {/* Protected routes */}
+                <Route element={<ProtectedRoute />}>
 
-                 <Route
-                    path="/tools/password-analyzer"
-                    element={<PasswordAnalyzer />}
-                />
+                    <Route
+                        path="/dashboard"
+                        element={<Dashboard />}
+                    />
 
-                <Route
-                    path="/tools/password-generator"
-                    element={<PasswordGenerator />}
-                />
+                    <Route
+                        path="/tools/password-analyzer"
+                        element={<PasswordAnalyzer />}
+                    />
 
-                <Route
-                    path="/tools/hashing"
-                    element={<Hashing />}
-                />
+                    <Route
+                        path="/tools/password-generator"
+                        element={<PasswordGenerator />}
+                    />
 
-                <Route
-                    path="/tools/hash-verification"
-                    element={<HashVerification />}
-                />
+                    <Route
+                        path="/tools/hashing"
+                        element={<Hashing />}
+                    />
 
-                <Route
-                    path="/tools/file-integrity"
-                    element={<FileIntegrity />}
-                />
+                    <Route
+                        path="/tools/hash-verification"
+                        element={<HashVerification />}
+                    />
 
-                <Route
-                    path="/tools/security-headers"
-                    element={<SecurityHeaders />}
-                />
+                    <Route
+                        path="/tools/file-integrity"
+                        element={<FileIntegrity />}
+                    />
+
+                    <Route
+                        path="/tools/security-headers"
+                        element={<SecurityHeaders />}
+                    />
+
+                </Route>
+
             </Routes>
         </BrowserRouter>
     );

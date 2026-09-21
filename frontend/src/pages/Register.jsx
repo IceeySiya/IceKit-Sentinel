@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
 
-function Register(){
+function Register() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -11,39 +14,53 @@ function Register(){
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-    function handleChange(event){
-          setFormData({
+    function handleChange(event) {
+        setFormData({
             ...formData,
             [event.target.name]: event.target.value
         });
     }
 
-    async function handleSubmit(event){
+    async function handleSubmit(event) {
         event.preventDefault();
 
         setMessage("");
         setError("");
-        try{
-            const results= await registerUser(formData);
+
+        try {
+            const results = await registerUser(formData);
+
+            /*
+             * Registration was successful.
+             */
             setMessage(results.message);
+
             setFormData({
                 username: "",
                 email: "",
                 password: ""
             });
-        } catch (error){
+
+            /*
+             * Redirect the user to the login page
+             * after successful registration.
+             */
+            navigate("/login");
+        } catch (error) {
             setError(error.message);
         }
-
     }
 
-    return(
+    return (
         <div>
             <h1>Create Account</h1>
 
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username">
+                        Username:
+                    </label>
+
                     <input
                         type="text"
                         id="username"
@@ -55,7 +72,10 @@ function Register(){
                 </div>
 
                 <div>
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email">
+                        Email:
+                    </label>
+
                     <input
                         type="email"
                         id="email"
@@ -67,7 +87,10 @@ function Register(){
                 </div>
 
                 <div>
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password">
+                        Password:
+                    </label>
+
                     <input
                         type="password"
                         id="password"
@@ -78,15 +101,23 @@ function Register(){
                     />
                 </div>
 
-                <button type="submit">Create Account</button>
+                <button type="submit">
+                    Create Account
+                </button>
             </form>
 
-             {message && <p>{message}</p>}
+            {message && <p>{message}</p>}
 
             {error && <p>{error}</p>}
-        </div>
-        
-    );
 
+            <p>
+                Already have an account?{" "}
+                <Link to="/login">
+                    Login here
+                </Link>
+            </p>
+        </div>
+    );
 }
+
 export default Register;
